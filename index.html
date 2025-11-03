@@ -8,6 +8,23 @@
   <title>Library</title>
 </head>
 <body>
-<p>TEST</p>
+  <dialog class="shadow" open>
+    <form class="new_book_form" action="#" method="post">
+      <h1>Add New Book</h1>
+      <div class="inputs">
+        <input type="text" id="title" name="title" placeholder="Title" required>
+        <input type="text" id="author" name="author" placeholder="Author" required>
+        <input type="number" id="pages" name="pages" placeholder="Pages" required>
+        <div>
+          <label for="read">Read</label>
+          <input type="checkbox" id="read" name="read">
+        </div>
+      </div>
+      <div class="action_button">
+        <button class="shadow">Add Book</button>
+        <button class="shadow">Cancel</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>
