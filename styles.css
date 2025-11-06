@@ -10,10 +10,42 @@
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  padding: 30px;
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse; /* Supprime les espaces entre les bordures */
+  overflow: hidden;
+  background-color: white;
+  border-radius: 8px;
+  width: 80%;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd; /* Bordure fine et discrète */
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #ececec;
+}
+
+tr:nth-child(even) {
+  background-color: #f8f8f8; /* Lignes alternées */
+}
+
+tr:hover {
+  background-color: #ddd; /* Surbrillance au survol */
 }
 
 .new_book_form{
@@ -67,5 +99,5 @@ button:active {
 }
 
 .shadow{
-  box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
 }
