@@ -22,12 +22,20 @@ h1 {
   font-weight: bold;
 }
 
+.wrapper{
+  display: inherit;
+  flex-direction: inherit;
+  align-items: flex-start;
+  width: 80%;
+  gap: 20px;
+}
+
 table {
+  align-self: stretch;
   border-collapse: collapse; /* Supprime les espaces entre les bordures */
   overflow: hidden;
   background-color: white;
   border-radius: 8px;
-  width: 80%;
 }
 
 th, td {
@@ -86,7 +94,7 @@ button {
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.1s ease;
   cursor: pointer;
 }
 
