@@ -18,7 +18,7 @@ function Book(title,author,pages,read){
 }
 
 function displayBookInLibrary(){
-  bodySection.innerHTML = "";
+  bodySection.innerHTML = ""; // suppression every thing in the body section
   if(myLibrary.length !== 0) {
     myLibrary.forEach((elements) => {
       const row = document.createElement("tr");
@@ -42,13 +42,17 @@ function displayBookInLibrary(){
     });
   }
   else {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.textContent = "No books in the library";
-    row.appendChild(cell);
-    cell.colSpan = 6;
-    bodySection.appendChild(row);
+    emptyLibrary();
   }
+}
+
+function emptyLibrary() {
+  const row = document.createElement("tr");
+  const cell = document.createElement("td");
+  cell.textContent = "No books in the library";
+  row.appendChild(cell);
+  cell.colSpan = 6;
+  bodySection.appendChild(row);
 }
 
 // Utiliser la délégation d’événement pour éviter d'avoir 50 écouteurs d'événement
@@ -63,6 +67,9 @@ bodySection.addEventListener("click", (event) => {
     if (index !== -1) {
       myLibrary.splice(index, 1); // supprime l'objet directement
     }
+  }
+  if(myLibrary.length === 0) {
+    emptyLibrary();
   }
 });
 
