@@ -1,5 +1,9 @@
 const bodySection = document.querySelector("tbody");
+const newBookButton = document.querySelector(".wrapper > button");
 
+const addBookDialog = document.querySelector("dialog");
+const addBookDialogButton = document.querySelector("#add");
+const closeDialogButton = document.querySelector("#close");
 
 const myLibrary = [];
 
@@ -24,7 +28,15 @@ function displayBookInLibrary(){
       const row = document.createElement("tr");
 
       Object.values(elements).forEach(value => {
-        if (typeof value !== "function") {
+        if(typeof value === "boolean") {
+          const cell = document.createElement("td");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = value;
+          cell.appendChild(checkbox);
+          row.appendChild(cell);
+        }
+        else if(typeof value !== "function") {
           const cell = document.createElement("td");
           cell.textContent = value;
           row.appendChild(cell);
@@ -67,19 +79,47 @@ bodySection.addEventListener("click", (event) => {
     if (index !== -1) {
       myLibrary.splice(index, 1); // supprime l'objet directement
     }
-  }
   if(myLibrary.length === 0) {
     emptyLibrary();
   }
+  }
+
 });
 
-function addBookToLibrary() {
-  // take params, create a book then store it in the array
-  myLibrary.push(new Book('The Hobbit', 'J.R.R Tolkien', 285,false))
-  myLibrary.push(new Book('Lord of the ring', 'J.R.R Tolkien', 458,true))
+function addBookToLibrary(title, author, pages, read) {
+  // create a book then store it in the array
+  // myLibrary.push(new Book('The Hobbit', 'J.R.R Tolkien', 285,false))
+  // myLibrary.push(new Book('Lord of the ring', 'J.R.R Tolkien', 458,true))
+  if (title!== "" && author!== "" &&  pages!== ""){
+    myLibrary.push(new Book(title, author, pages, read));
+  }
+  console.log(myLibrary);
+
   displayBookInLibrary();
 }
 
-addBookToLibrary();
+newBookButton.addEventListener("click", () => {
+  addBookDialog.showModal();
+});
+
+closeDialogButton.addEventListener("click", (event) => {
+  event.preventDefault(); // empêche la soumission
+  addBookDialog.close();
+});
+
+addBookDialogButton.addEventListener("click", (event) => {
+  event.preventDefault(); // empêche la soumission
+  addBookDialog.close();
+
+  const title = document.querySelector("#title").value;
+  const author = document.querySelector("#author").value;
+  const pages = document.querySelector("#pages").value;
+  const read = document.querySelector("#read").checked;
+
+  addBookToLibrary(title,author,pages,read);
+});
+
+addBookToLibrary("","","",true);
+// addBookToLibrary();
 // const thehobbit = new Book('The Hobbit', 'J.R.R Tolkien', 285,false);
-console.log(myLibrary[0].info());
+// console.log(myLibrary[0].info());
