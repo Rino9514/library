@@ -16,40 +16,46 @@ function Book(title,author,pages,read){
   this.pages = pages;
   this.id = crypto.randomUUID();
   this.read = read;
-  this.info = function(){
-    return(this.title + " by " + this.author +", " + this.pages + " pages, " + this.read + this.id);
-  }
+}
+
+Book.prototype.info = function(){
+  return(this.title + " by " + this.author +", " + this.pages + " pages, " + this.read + " " + this.id);
+}
+
+Book.prototype.toggleRead = function(){
+  this.read = !this.read;
 }
 
 function displayBookInLibrary(){
-  bodySection.innerHTML = ""; // suppression every thing in the body section
+  bodySection.innerHTML = ""; // suppression of everything in the body section
   if(myLibrary.length !== 0) {
     myLibrary.forEach((elements) => {
       const row = document.createElement("tr");
-
       Object.values(elements).forEach(value => {
-        if(typeof value === "boolean") {
+        if(typeof value === "boolean") { // checkbox
           const cell = document.createElement("td");
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
           checkbox.checked = value;
+          checkbox.dataset.id = elements.id; // to know what book it is
           cell.appendChild(checkbox);
-          row.appendChild(cell);
-        }
-        else if(typeof value !== "function") {
-          const cell = document.createElement("td");
-          cell.textContent = value;
           row.appendChild(cell);
         }
         else {
           const cell = document.createElement("td");
-          const btn = document.createElement("button");
-          btn.textContent = "Delete";
-          btn.dataset.id = elements.id;
-          cell.appendChild(btn);
+          cell.textContent = value;
           row.appendChild(cell);
         }
       });
+      //delete button
+      const cell = document.createElement("td");
+      const btn = document.createElement("button");
+      btn.textContent = "Delete";
+      btn.dataset.id = elements.id;
+      btn.classList.add("shadow");
+      cell.appendChild(btn);
+      row.appendChild(cell);
+
       bodySection.appendChild(row);
     });
   }
@@ -85,16 +91,22 @@ bodySection.addEventListener("click", (event) => {
   }
 
 });
+// on utilise la même methode pour le checkbox car de base les inputs existent pas et cela créé une au commencement si on utilise un querySelector checkbox
+bodySection.addEventListener("change", (event) => {
+  if (event.target.tagName === "INPUT") {
+    const idToToggle = event.target.dataset.id; // récupère l'id
+    const index = myLibrary.findIndex(book => book.id === idToToggle);
+    if (index !== -1) myLibrary[index].toggleRead();
+  }
+});
 
 function addBookToLibrary(title, author, pages, read) {
   // create a book then store it in the array
   // myLibrary.push(new Book('The Hobbit', 'J.R.R Tolkien', 285,false))
   // myLibrary.push(new Book('Lord of the ring', 'J.R.R Tolkien', 458,true))
-  if (title!== "" && author!== "" &&  pages!== ""){
+  if (title && author && pages){
     myLibrary.push(new Book(title, author, pages, read));
   }
-  console.log(myLibrary);
-
   displayBookInLibrary();
 }
 
@@ -119,7 +131,7 @@ addBookDialogButton.addEventListener("click", (event) => {
   addBookToLibrary(title,author,pages,read);
 });
 
-addBookToLibrary("","","",true);
+emptyLibrary();
 // addBookToLibrary();
 // const thehobbit = new Book('The Hobbit', 'J.R.R Tolkien', 285,false);
 // console.log(myLibrary[0].info());
