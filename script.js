@@ -7,24 +7,24 @@ const closeDialogButton = document.querySelector("#close");
 
 const myLibrary = [];
 
-function Book(title,author,pages,read){
-  if(!new.target){
-    throw Error("Use new for this constructor")
+class Book {
+  constructor(title, author, pages, id, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.id = crypto.randomUUID();
+    this.read = read;
   }
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.id = crypto.randomUUID();
-  this.read = read;
+
+  toggleRead (){
+    this.read = !this.read;
+  }
+
+  toggleRead (){
+    return(this.title + " by " + this.author +", " + this.pages + " pages, " + this.read + " " + this.id);
+  }
 }
 
-Book.prototype.info = function(){
-  return(this.title + " by " + this.author +", " + this.pages + " pages, " + this.read + " " + this.id);
-}
-
-Book.prototype.toggleRead = function(){
-  this.read = !this.read;
-}
 
 function displayBookInLibrary(){
   bodySection.innerHTML = ""; // suppression of everything in the body section
